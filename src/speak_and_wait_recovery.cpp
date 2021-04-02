@@ -24,7 +24,9 @@ void SpeakAndWaitRecovery::initialize(
         private_nh.param("speak_text", speak_text_, std::string("Please clear my route."));
         private_nh.param("duration_wait", duration_wait_, 5.0);
         private_nh.param("duration_timeout", duration_timeout_, 1.0);
-        ptr_action_client_ = std::shared_ptr<actionlib::SimpleActionClient<sound_play::SoundRequestAction>>(new actionlib::SimpleActionClient<sound_play::SoundRequestAction>("sound_play", true));
+        std::string sound_action_name;
+        private_nh.param("sound_action", sound_action_name, std::string("sound_play"));
+        ptr_action_client_ = std::shared_ptr<actionlib::SimpleActionClient<sound_play::SoundRequestAction>>(new actionlib::SimpleActionClient<sound_play::SoundRequestAction>(sound_action_name, true));
         initialized_ = true;
     } else {
         ROS_ERROR("You should not call initialize twice on this object, doing nothing");
